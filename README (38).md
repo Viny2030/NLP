@@ -1,61 +1,102 @@
-# Python Data Cleaning and Preparation Best Practices
+<h2 align="center">
+<a href="https://github.com/dmlc/gluon-nlp"><img src="https://raw.githubusercontent.com/dmlc/gluon-nlp/master/docs/_static/gluon-logo.svg" alt="GluonNLP Logo" width="500"/></a>
+</h2>
 
-<a href="https://www.packtpub.com/en-in/product/python-data-cleaning-and-preparation-best-practices-9781837634743"><img src="https://content.packt.com/_/image/original/B19801/cover_image_large.jpg" alt="Shipping & Fee Details" height="256px" align="right"></a>
+<h2 align="center">
+GluonNLP: Your Choice of Deep Learning for NLP
+</h2>
 
-This is the code repository for [Python Data Cleaning and Preparation Best Practices](https://www.packtpub.com/en-in/product/python-data-cleaning-and-preparation-best-practices-9781837634743), published by Packt.
+<p align="center">
+    <a href="https://github.com/dmlc/gluon-nlp/actions"><img src="https://github.com/dmlc/gluon-nlp/workflows/continuous%20build/badge.svg"></a>
+    <a href="https://github.com/dmlc/gluon-nlp/actions"><img src="https://github.com/dmlc/gluon-nlp/workflows/continuous%20build%20-%20gpu/badge.svg"></a>
+    <a href="https://codecov.io/gh/dmlc/gluon-nlp"><img src="https://codecov.io/gh/dmlc/gluon-nlp/branch/master/graph/badge.svg"></a>
+    <a href="./LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"></a>
+    <a href="https://github.com/dmlc/gluonnlp/actions"><img src="https://img.shields.io/badge/python-3.6%2C3.7%2C3.8-blue.svg"></a>
+    <a href="https://pypi.org/project/gluonnlp/#history"><img src="https://img.shields.io/pypi/v/gluonnlp.svg"></a>
+</p>
 
-**A practical guide to organizing and handling data from various sources and formats using Python**
+GluonNLP is a toolkit that helps you solve NLP problems. It provides easy-to-use tools that helps you load the text data, 
+process the text data, and train models.
 
-## What is this book about?
-This book provides up-to-date methods for data cleaning and preparation using Python. You’ll learn effective techniques for solving the challenges you face, exploring how to create high-quality data products based on well-formatted and cleaned data.
+See our documents at https://nlp.gluon.ai/master/index.html.
 
-* Ingest data from different sources and write it to the required sinks
-* Profile and validate data pipelines for better quality control
-* Get up to speed with grouping, merging, and joining structured data
-* Handle missing values and outliers in structured datasets
-* Implement techniques to manipulate and transform time series data
-* Apply structure to text, image, voice, and other unstructured data
+# Features
 
-If you feel this book is for you, get your [copy](https://www.amazon.com/Python-Data-Cleaning-Preparation-Practices/dp/1837634742) today!
+- Easy-to-use Text Processing Tools and Modular APIs
+- Pretrained Model Zoo
+- Write Models with Numpy-like API
+- Fast Inference via [Apache TVM (incubating)](https://tvm.apache.org/) (Experimental)
+- AWS Integration via [SageMaker](https://aws.amazon.com/sagemaker/)
 
-<a href="https://www.packtpub.com/?utm_source=github&utm_medium=banner&utm_campaign=GitHubBanner"><img src="https://raw.githubusercontent.com/PacktPublishing/GitHub/master/GitHub.png" 
-alt="https://www.packtpub.com/" border="5" /></a>
 
-## Instructions and Navigations
-All of the code is organized into folders. For example, Chapter01.
+# Installation
+First of all, install the MXNet 2 release such as MXNet 2 Alpha. You may use the
+following commands:
 
-The code will look like the following:
+```bash
+# Install the version with CUDA 10.2
+python3 -m pip install -U --pre "mxnet-cu102>=2.0.0a"
+
+# Install the version with CUDA 11
+python3 -m pip install -U --pre "mxnet-cu110>=2.0.0a"
+
+# Install the cpu-only version
+python3 -m pip install -U --pre "mxnet>=2.0.0a"
 ```
-def process_in_batches(data, batch_size): 
- 
- for i in range(0, len(data), batch_size): 
- 
- yield data[i:i + batch_size]
+
+
+To install GluonNLP, use
+
+```bash
+python3 -m pip install -U -e .
+
+# Also, you may install all the extra requirements via
+python3 -m pip install -U -e ."[extras]"
+```
+
+If you find that you do not have the permission, you can also install to the user folder:
+
+```bash
+python3 -m pip install -U -e . --user
+```
+
+For Windows users, we recommend to use the [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/about).
+
+
+# Access the Command-line Toolkits
+
+To facilitate both the engineers and researchers, we provide command-line-toolkits for
+downloading and processing the NLP datasets. For more details, you may refer to
+ [GluonNLP Datasets](./scripts/datasets) and [GluonNLP Data Processing Tools](./scripts/processing).
+
+```bash
+# CLI for downloading / preparing the dataset
+nlp_data help
+
+# CLI for accessing some common data processing scripts
+nlp_process help
+
+# Also, you can use `python -m` to access the toolkits
+python3 -m gluonnlp.cli.data help
+python3 -m gluonnlp.cli.process help
 
 ```
 
-**Following is what you need for this book:**
-Whether you're a data analyst, data engineer, data scientist, or a data professional responsible for data preparation and cleaning, this book is for you. Working knowledge of Python programming is needed to get the most out of this book.
+# Run Unittests
+You may go to [tests](tests) to see how to run the unittests.
 
-With the following software and hardware list you can run all code files present in the book (Chapter 1-13).
 
-### Software and Hardware List
+# Use Docker
+You can use Docker to launch a JupyterLab development environment with GluonNLP installed.
 
-| Chapter  | Software required                   | OS required                        |
-| -------- | ------------------------------------| -----------------------------------|
-| 1-13        | Python3                    | Windows, macOS, or Linux |
-| 1-13        | Visual Studio Code (or your preferred IDE)            | Windows, macOS, or Linux |
+```
+# GPU Instance
+docker pull gluonai/gluon-nlp:gpu-latest
+docker run --gpus all --rm -it -p 8888:8888 -p 8787:8787 -p 8786:8786 --shm-size=2g gluonai/gluon-nlp:gpu-latest
 
-### Related products
-* Data Ingestion with Python Cookbook [[Packt]](https://www.packtpub.com/en-in/product/data-ingestion-with-python-cookbook-9781837632602) [[Amazon]](https://www.amazon.com/dp/183763260X)
+# CPU Instance
+docker pull gluonai/gluon-nlp:cpu-latest
+docker run --rm -it -p 8888:8888 -p 8787:8787 -p 8786:8786 --shm-size=2g gluonai/gluon-nlp:cpu-latest
+``` 
 
-* Python Data Cleaning Cookbook [[Packt]](https://www.packtpub.com/en-in/product/python-data-cleaning-cookbook-9781803239873) [[Amazon]](https://www.amazon.com/dp/1803239875)
-
-## Get to Know the Author
-**Maria Zervou** is a Generative AI and machine learning expert, dedicated to making advanced technologies 
-accessible. With over a decade of experience, she has led impactful AI projects across industries and 
-mentored teams on cutting-edge advancements. As a machine learning specialist at Databricks, Maria 
-drives innovative AI solutions and industry adoption. Beyond her role, she democratizes knowledge 
-through her YouTube channel, featuring experts on AI topics. A recognized thought leader and finalist 
-in the Women in Tech Excellence Awards, Maria advocates for responsible AI use and contributes to 
-open source projects, fostering collaboration and empowering future AI leaders.
+For more details, you can refer to the guidance in [tools/docker](tools/docker).
